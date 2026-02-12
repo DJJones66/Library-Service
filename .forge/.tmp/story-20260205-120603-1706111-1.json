@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "total": 13,
+  "remaining": 13,
+  "quality_gates": [
+    "python -m pytest",
+    "python -m ruff check ."
+  ],
+  "id": "US-001",
+  "title": "Scaffold MCP server with config and health endpoint"
+}

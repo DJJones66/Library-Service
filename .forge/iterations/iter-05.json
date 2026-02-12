@@ -1,0 +1,51 @@
+{
+  "runId": "20260205-120603-1706111",
+  "iteration": "5",
+  "mode": "build",
+  "story": {
+    "id": "US-005",
+    "title": "Add search_markdown operation"
+  },
+  "started": "2026-02-05 12:54:54",
+  "ended": "2026-02-05 13:02:52",
+  "durationSeconds": 478,
+  "status": "success",
+  "log": "/home/hacker/Projects/Library-Service/.forge/logs/iter-05.raw.txt",
+  "git": {
+    "headBefore": "63acdc2adfbe20e7e28b750fe9fbebc30c8e4abf",
+    "headAfter": "b239954ea4623fc2f040041e2bb21cb307f29350",
+    "commits": [
+      "b239954 chore(forge): record US-005 progress",
+      "0135220 feat(mcp): add markdown search operation"
+    ],
+    "changedFiles": [
+      ".agents/tasks/prd-markdown-mcp.json",
+      ".forge/activity.log",
+      ".forge/errors.log",
+      ".forge/events.jsonl",
+      ".forge/iterations/iter-04.json",
+      ".forge/logs/iter-04.raw.txt",
+      ".forge/logs/iter-05.raw.txt",
+      ".forge/metrics.json",
+      ".forge/progress.md",
+      ".forge/stories/US-004.json",
+      ".forge/stories/US-005.json",
+      ".forge/stories/US-006.json",
+      ".forge/stories/US-007.json",
+      ".forge/stories/US-008.json",
+      ".forge/stories/US-009.json",
+      ".forge/stories/US-010.json",
+      ".forge/stories/US-011.json",
+      ".forge/stories/US-012.json",
+      ".forge/stories/US-013.json",
+      "app/mcp.py",
+      "tests/test_search_markdown.py"
+    ],
+    "dirtyFiles": [
+      ".forge/activity.log",
+      ".forge/events.jsonl",
+      ".forge/logs/iter-05.raw.txt"
+    ]
+  },
+  "updatedAt": "2026-02-05T18:02:53.634574+00:00"
+}

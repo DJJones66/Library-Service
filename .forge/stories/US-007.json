@@ -1,0 +1,18 @@
+{
+  "id": "US-007",
+  "title": "Add write_markdown operation for append/prepend",
+  "status": "done",
+  "description": "As a user, I want controlled single-file writes so that markdown can be updated safely and atomically.",
+  "dependsOn": [
+    "US-002"
+  ],
+  "acceptanceCriteria": [
+    "write_markdown supports append and prepend operations on markdown files",
+    "Writes are atomic and preserve newline consistency",
+    "Example: append adds content at the end of the file exactly as previewed",
+    "Negative case: unsupported operation returns INVALID_OPERATION and leaves the file unchanged"
+  ],
+  "startedAt": "2026-02-05T18:13:30.868898+00:00",
+  "completedAt": "2026-02-05T18:23:13.925574+00:00",
+  "updatedAt": "2026-02-05T18:23:13.925561+00:00"
+}

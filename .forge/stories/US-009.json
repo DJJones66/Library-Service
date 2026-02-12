@@ -1,0 +1,18 @@
+{
+  "id": "US-009",
+  "title": "Add delete_markdown with explicit confirmation",
+  "status": "done",
+  "description": "As a user, I want explicit deletion safeguards so that accidental deletes are impossible.",
+  "dependsOn": [
+    "US-002"
+  ],
+  "acceptanceCriteria": [
+    "delete_markdown deletes a single markdown file only when confirm=true",
+    "Deletion rejects directories and non-markdown paths",
+    "Example: delete_markdown(path, confirm=true) removes the file",
+    "Negative case: delete_markdown(path, confirm=false) returns CONFIRM_REQUIRED and the file remains"
+  ],
+  "startedAt": "2026-02-05T18:35:26.610541+00:00",
+  "completedAt": "2026-02-05T18:43:10.115693+00:00",
+  "updatedAt": "2026-02-05T18:43:10.115677+00:00"
+}

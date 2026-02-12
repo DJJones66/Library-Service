@@ -1,0 +1,51 @@
+{
+  "runId": "20260205-120603-1706111",
+  "iteration": "8",
+  "mode": "build",
+  "story": {
+    "id": "US-008",
+    "title": "Add edit_markdown section-aware operations"
+  },
+  "started": "2026-02-05 13:23:16",
+  "ended": "2026-02-05 13:35:22",
+  "durationSeconds": 726,
+  "status": "success",
+  "log": "/home/hacker/Projects/Library-Service/.forge/logs/iter-08.raw.txt",
+  "git": {
+    "headBefore": "23529964384ee2ce390a81b3feab9204d40f5ee1",
+    "headAfter": "f43277aeba306abfc01f9622cc54a234338822b4",
+    "commits": [
+      "f43277a chore(forge): update progress log",
+      "8372578 feat(mcp): add section-aware edit_markdown"
+    ],
+    "changedFiles": [
+      ".agents/tasks/prd-markdown-mcp.json",
+      ".forge/.tmp/prompt-20260205-120603-1706111-8.md",
+      ".forge/.tmp/story-20260205-120603-1706111-8.json",
+      ".forge/.tmp/story-20260205-120603-1706111-8.md",
+      ".forge/activity.log",
+      ".forge/errors.log",
+      ".forge/events.jsonl",
+      ".forge/iterations/iter-07.json",
+      ".forge/logs/iter-07.raw.txt",
+      ".forge/logs/iter-08.raw.txt",
+      ".forge/metrics.json",
+      ".forge/progress.md",
+      ".forge/stories/US-007.json",
+      ".forge/stories/US-008.json",
+      ".forge/stories/US-009.json",
+      ".forge/stories/US-010.json",
+      ".forge/stories/US-011.json",
+      ".forge/stories/US-012.json",
+      ".forge/stories/US-013.json",
+      "app/mcp.py",
+      "tests/test_edit_markdown.py"
+    ],
+    "dirtyFiles": [
+      ".forge/activity.log",
+      ".forge/events.jsonl",
+      ".forge/logs/iter-08.raw.txt"
+    ]
+  },
+  "updatedAt": "2026-02-05T18:35:24.341764+00:00"
+}

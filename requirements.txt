@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+dulwich
+httpx
+pytest
+ruff

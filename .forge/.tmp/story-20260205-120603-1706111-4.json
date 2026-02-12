@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "total": 13,
+  "remaining": 10,
+  "quality_gates": [
+    "python -m pytest",
+    "python -m ruff check ."
+  ],
+  "id": "US-004",
+  "title": "Add list_markdown_files operation"
+}

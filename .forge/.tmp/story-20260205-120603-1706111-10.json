@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "total": 13,
+  "remaining": 4,
+  "quality_gates": [
+    "python -m pytest",
+    "python -m ruff check ."
+  ],
+  "id": "US-010",
+  "title": "Integrate git commits for all mutations"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "US-006",
+  "title": "Add preview_markdown_change operation",
+  "status": "done",
+  "description": "As a user, I want a diff preview for markdown edits so that changes are reviewable before any write.",
+  "dependsOn": [
+    "US-003"
+  ],
+  "acceptanceCriteria": [
+    "preview_markdown_change simulates edits in memory and returns unified diff, summary, and riskLevel",
+    "Preview never writes to disk",
+    "Example: preview append returns a diff and the file remains unchanged",
+    "Negative case: preview on a non-markdown path returns NOT_MARKDOWN error and the file remains unchanged"
+  ],
+  "startedAt": "2026-02-05T18:02:55.905239+00:00",
+  "completedAt": "2026-02-05T18:13:28.658985+00:00",
+  "updatedAt": "2026-02-05T18:13:28.658970+00:00"
+}

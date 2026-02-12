@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "total": 13,
+  "remaining": 8,
+  "quality_gates": [
+    "python -m pytest",
+    "python -m ruff check ."
+  ],
+  "id": "US-006",
+  "title": "Add preview_markdown_change operation"
+}

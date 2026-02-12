@@ -1,0 +1,57 @@
+{
+  "runId": "20260205-120603-1706111",
+  "iteration": "4",
+  "mode": "build",
+  "story": {
+    "id": "US-004",
+    "title": "Add list_markdown_files operation"
+  },
+  "started": "2026-02-05 12:44:36",
+  "ended": "2026-02-05 12:54:50",
+  "durationSeconds": 614,
+  "status": "success",
+  "log": "/home/hacker/Projects/Library-Service/.forge/logs/iter-04.raw.txt",
+  "git": {
+    "headBefore": "1f1057ea8fd10eed4be0b7a92f72dbad272ee945",
+    "headAfter": "63acdc2adfbe20e7e28b750fe9fbebc30c8e4abf",
+    "commits": [
+      "63acdc2 chore(cleanup): remove pycache artifacts",
+      "c9379d7 chore(logs): record uvicorn check",
+      "d08f972 chore(logs): update progress entry",
+      "e4e3352 feat(mcp): add markdown file listing"
+    ],
+    "changedFiles": [
+      ".agents/tasks/prd-markdown-mcp.json",
+      ".forge/.tmp/prompt-20260205-120603-1706111-4.md",
+      ".forge/.tmp/story-20260205-120603-1706111-4.json",
+      ".forge/.tmp/story-20260205-120603-1706111-4.md",
+      ".forge/activity.log",
+      ".forge/errors.log",
+      ".forge/events.jsonl",
+      ".forge/iterations/iter-03.json",
+      ".forge/logs/iter-03.raw.txt",
+      ".forge/logs/iter-04.raw.txt",
+      ".forge/metrics.json",
+      ".forge/progress.md",
+      ".forge/stories/US-003.json",
+      ".forge/stories/US-004.json",
+      ".forge/stories/US-005.json",
+      ".forge/stories/US-006.json",
+      ".forge/stories/US-007.json",
+      ".forge/stories/US-008.json",
+      ".forge/stories/US-009.json",
+      ".forge/stories/US-010.json",
+      ".forge/stories/US-011.json",
+      ".forge/stories/US-012.json",
+      ".forge/stories/US-013.json",
+      "app/mcp.py",
+      "tests/test_list_markdown_files.py"
+    ],
+    "dirtyFiles": [
+      ".forge/activity.log",
+      ".forge/events.jsonl",
+      ".forge/logs/iter-04.raw.txt"
+    ]
+  },
+  "updatedAt": "2026-02-05T17:54:52.357813+00:00"
+}

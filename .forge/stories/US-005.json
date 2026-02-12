@@ -1,0 +1,18 @@
+{
+  "id": "US-005",
+  "title": "Add search_markdown operation",
+  "status": "done",
+  "description": "As a user, I want to search markdown text so that I can find relevant files without embeddings.",
+  "dependsOn": [
+    "US-004"
+  ],
+  "acceptanceCriteria": [
+    "search_markdown performs simple substring search and returns matching paths with snippets",
+    "Search is deterministic and does not use embeddings",
+    "Example: search_markdown(\"JWT\") returns correct file hits and snippets",
+    "Negative case: search_markdown(\"\") returns INVALID_QUERY error"
+  ],
+  "startedAt": "2026-02-05T17:54:54.639212+00:00",
+  "completedAt": "2026-02-05T18:02:53.705353+00:00",
+  "updatedAt": "2026-02-05T18:02:53.705333+00:00"
+}
