@@ -27,6 +27,7 @@ from app.user_scope import get_request_library_root
 TASK_LINE_PATTERN = re.compile(
     r"^- \[(?P<status>[ xX])\] T-(?P<id>\d+)\s*\|\s*(?P<rest>.*)$"
 )
+USER_OWNER_ALIASES = {"user", "me", "myself", "self", "you"}
 
 
 @mcp_router.post("/tool:list_tasks")
@@ -895,6 +896,7 @@ def _filter_tasks(
     library_root: Path | None = None,
 ) -> list[dict[str, Any]]:
     filtered: list[dict[str, Any]] = []
+    normalized_owner = _normalize_owner_value(owner)
     scope_lookup = (
         _build_scope_lookup(library_root)
         if library_root is not None
@@ -902,7 +904,7 @@ def _filter_tasks(
     )
 
     for task in tasks:
-        if owner and task.get("owner") != owner:
+        if normalized_owner and _normalize_owner_value(task.get("owner")) != normalized_owner:
             continue
         if priority and task.get("priority") != priority:
             continue
@@ -915,6 +917,17 @@ def _filter_tasks(
         filtered.append(task)
 
     return filtered
+
+
+def _normalize_owner_value(value: Any) -> str | None:
+    if not isinstance(value, str):
+        return None
+    normalized = value.strip().lower()
+    if not normalized:
+        return None
+    if normalized in USER_OWNER_ALIASES:
+        return "user"
+    return normalized
 
 
 def _build_task_from_payload(

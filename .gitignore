@@ -48,3 +48,15 @@ service_runtime.log
 *.swo
 .DS_Store
 Thumbs.db
+
+# Workspace/distraction cleanup
+.agents/
+.codex/
+.forge/
+.vscode/
+designs/
+logs/
+tests/
+AGENTS.md
+README-OLLAMA-AGENT.md
+service_runtime.log
