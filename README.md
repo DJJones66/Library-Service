@@ -16,14 +16,15 @@ Set the library root and strict request identity controls:
 
 ```bash
 cat <<'EOF' > .env
-BRAINDRIVE_LIBRARY_PATH="/path/to/library"
+BRAINDRIVE_LIBRARY_PATH="./library"
+BRAINDRIVE_LIBRARY_BASE_TEMPLATE_PATH="./library_templates/Base_Library"
 BRAINDRIVE_LIBRARY_REQUIRE_USER_HEADER="true"
 BRAINDRIVE_LIBRARY_SERVICE_TOKEN="dev-library-token"
 EOF
 ```
 
-`BRAINDRIVE_LIBRARY_PATH` can still be provided via the environment; it takes precedence over `.env`.
-Starting without either one raises a clear config error and prevents startup.
+`BRAINDRIVE_LIBRARY_PATH` and `BRAINDRIVE_LIBRARY_BASE_TEMPLATE_PATH` can still be provided via the environment; those values take precedence over `.env`.
+Starting without `BRAINDRIVE_LIBRARY_PATH` raises a clear config error and prevents startup.
 `BRAINDRIVE_LIBRARY_REQUIRE_USER_HEADER` defaults to `true`.
 If `BRAINDRIVE_LIBRARY_SERVICE_TOKEN` is set, callers must include `X-BrainDrive-Service-Token`.
 

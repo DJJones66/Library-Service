@@ -3,7 +3,7 @@
     "type": "function",
     "function": {
       "name": "create_project",
-      "description": "Create a project directory and seed markdown files.",
+      "description": "Create a project or life scope directory and ensure canonical markdown scaffold files exist. When files are omitted or partial, required scope files are auto-filled.",
       "parameters": {
         "type": "object",
         "properties": {
@@ -17,7 +17,7 @@
           },
           "files": {
             "type": "array",
-            "description": "Optional list of files to create; defaults to spec.md if omitted.",
+            "description": "Optional list of files to create; use create_project_scaffold for canonical AGENT/spec/build-plan scaffolds.",
             "items": {
               "type": "object",
               "properties": {
@@ -475,7 +475,7 @@
     "type": "function",
     "function": {
       "name": "project_context",
-      "description": "Return key project files and metadata in one response.",
+      "description": "Return key project files and metadata in one response (AGENT.md, spec.md, build-plan.md, decisions.md, ideas.md by default).",
       "parameters": {
         "type": "object",
         "properties": {
@@ -514,7 +514,38 @@
     "type": "function",
     "function": {
       "name": "create_project_scaffold",
-      "description": "Create a project with the default scaffold files.",
+      "description": "Create a project scaffold with AGENT.md, spec.md, build-plan.md, decisions.md, and ideas.md.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "required": [
+              "path"
+            ]
+          },
+          {
+            "required": [
+              "name"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ensure_scope_scaffold",
+      "description": "Ensure canonical scaffold files exist for a project/life scope path.",
+      "x-safety-class": "mutating",
       "parameters": {
         "type": "object",
         "properties": {
@@ -544,7 +575,7 @@
     "type": "function",
     "function": {
       "name": "bootstrap_user_library",
-      "description": "Idempotently ensure the user-scoped library onboarding scaffold exists.",
+      "description": "Idempotently ensure the canonical user-scoped library scaffold exists (AGENT.md contract, life specs/plans, pulse/completed, schema-version).",
       "x-safety-class": "mutating",
       "parameters": {
         "type": "object",
@@ -614,6 +645,51 @@
           },
           "approved": {
             "type": "boolean"
+          },
+          "question": {
+            "type": "string",
+            "description": "The exact interview question asked for this turn."
+          },
+          "answer": {
+            "type": "string",
+            "description": "The user's answer to the interview question for this turn."
+          },
+          "phase": {
+            "type": "string",
+            "enum": [
+              "not_started",
+              "opening",
+              "goals_tasks",
+              "followup",
+              "complete"
+            ],
+            "description": "Current onboarding phase for tracker updates."
+          },
+          "question_index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "question_total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "next_followup_due_at_utc": {
+            "type": "string",
+            "description": "Optional ISO timestamp for next follow-up interview touchpoint."
+          },
+          "future_interview_topics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "finances",
+                "fitness",
+                "relationships",
+                "career",
+                "whyfinder"
+              ]
+            },
+            "description": "Optional future interview topic queue hints."
           }
         },
         "required": [
@@ -645,6 +721,24 @@
           },
           "summary": {
             "type": "string"
+          },
+          "next_followup_due_at_utc": {
+            "type": "string",
+            "description": "Optional ISO timestamp for the next follow-up interview."
+          },
+          "future_interview_topics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "finances",
+                "fitness",
+                "relationships",
+                "career",
+                "whyfinder"
+              ]
+            },
+            "description": "Optional suggested future interview topics."
           }
         },
         "required": [
@@ -707,6 +801,12 @@
           },
           "project": {
             "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
           }
         }
       }
@@ -739,6 +839,12 @@
             "type": "string"
           },
           "due": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "path": {
             "type": "string"
           }
         },

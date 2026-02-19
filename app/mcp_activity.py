@@ -17,6 +17,14 @@ from app.mcp_router import mcp_router
 from app.user_scope import get_request_library_root
 
 
+def _normalize_datetime_utc(value: datetime | None) -> datetime | None:
+    if value is None:
+        return None
+    if value.tzinfo is None:
+        return value.replace(tzinfo=timezone.utc)
+    return value.astimezone(timezone.utc)
+
+
 def _activity_log_path(library_root: Path) -> Path:
     return library_root / ACTIVITY_LOG_FILENAME
 
@@ -51,19 +59,21 @@ def _read_activity_entries(
     log_path = _activity_log_path(library_root)
     if not log_path.exists():
         return []
+
+    since_utc = _normalize_datetime_utc(since)
     entries: list[dict[str, Any]] = []
     for line in log_path.read_text(encoding="utf-8").splitlines():
         try:
             entry = json.loads(line)
         except json.JSONDecodeError:
             continue
-        if since:
+        if since_utc:
             timestamp = entry.get("timestamp")
             try:
-                entry_time = datetime.fromisoformat(timestamp)
+                entry_time = _normalize_datetime_utc(datetime.fromisoformat(timestamp))
             except (TypeError, ValueError):
                 entry_time = None
-            if entry_time and entry_time < since:
+            if entry_time and entry_time < since_utc:
                 continue
         entries.append(entry)
     return entries[-limit:]
@@ -87,7 +97,7 @@ def read_activity_log(payload: dict[str, Any], request: Request) -> dict[str, An
     since = None
     if since_value is not None:
         try:
-            since = datetime.fromisoformat(str(since_value))
+            since = _normalize_datetime_utc(datetime.fromisoformat(str(since_value)))
         except ValueError:
             raise McpError(
                 "INVALID_DATE",

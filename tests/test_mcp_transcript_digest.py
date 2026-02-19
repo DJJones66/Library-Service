@@ -53,3 +53,38 @@ def test_digest_snapshot(tmp_path):
     assert "tasks" in data
     assert "completed" in data
     assert "activity" in data
+
+
+def test_digest_snapshot_accepts_naive_activity_since(tmp_path):
+    mcp.create_task(
+        {"title": "Draft spec", "priority": "p1", "project": "demo"},
+        _build_request(tmp_path),
+    )
+    completed_task = mcp.create_task(
+        {"title": "Write tests", "priority": "p2", "project": "demo"},
+        _build_request(tmp_path),
+    )["data"]["task"]
+    mcp.complete_task({"id": completed_task["id"]}, _build_request(tmp_path))
+
+    naive_since = (datetime.now(timezone.utc) - timedelta(days=1)).replace(tzinfo=None).isoformat()
+    snapshot = mcp.digest_snapshot(
+        {"project": "demo", "activity_since": naive_since},
+        _build_request(tmp_path),
+    )
+    assert snapshot["ok"] is True
+    data = snapshot["data"]
+    assert isinstance(data.get("tasks"), list)
+    assert isinstance(data.get("completed"), list)
+    assert isinstance(data.get("activity"), list)
+
+
+def test_read_activity_log_accepts_naive_since(tmp_path):
+    mcp.create_task(
+        {"title": "Capture note", "priority": "p2", "project": "demo"},
+        _build_request(tmp_path),
+    )
+
+    naive_since = (datetime.now(timezone.utc) - timedelta(days=1)).replace(tzinfo=None).isoformat()
+    log = mcp.read_activity_log({"limit": 20, "since": naive_since}, _build_request(tmp_path))
+    assert log["ok"] is True
+    assert isinstance(log["data"].get("entries"), list)

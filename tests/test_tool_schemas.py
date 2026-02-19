@@ -42,6 +42,11 @@ TOOL_CASES = [
         {"path": "projects/active/example"},
     ),
     ToolCase(
+        "ensure_scope_scaffold",
+        mcp.ensure_scope_scaffold,
+        {"path": "projects/active/example"},
+    ),
+    ToolCase(
         "create_markdown",
         mcp.create_markdown,
         {"path": "docs/readme.md", "content": "Intro"},

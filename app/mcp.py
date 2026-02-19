@@ -60,6 +60,7 @@ from app.mcp_onboarding import (
 from app.mcp_projects import (
     create_project,
     create_project_scaffold,
+    ensure_scope_scaffold,
     list_projects,
     project_context,
     project_exists,

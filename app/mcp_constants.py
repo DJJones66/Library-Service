@@ -10,7 +10,7 @@ ACTIVITY_LOG_FILENAME = "activity.log"
 DEFAULT_PROJECT_FILES = [
     ("AGENT.md", "# Project Agent\n"),
     ("spec.md", "# Spec\n\n## Scope\nInitial scope.\n"),
+    ("build-plan.md", "# Build Plan\n\n## Phase 1\n\n## Phase 2\n"),
     ("decisions.md", "# Decisions\n"),
-    ("notes.md", "# Notes\n"),
     ("ideas.md", "# Ideas\n"),
 ]

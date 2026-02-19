@@ -23,6 +23,14 @@ from app.mcp_utils import _atomic_write
 from app.user_scope import get_request_library_root
 
 
+def _normalize_datetime_utc(value: datetime | None) -> datetime | None:
+    if value is None:
+        return None
+    if value.tzinfo is None:
+        return value.replace(tzinfo=timezone.utc)
+    return value.astimezone(timezone.utc)
+
+
 @mcp_router.post("/tool:digest_snapshot")
 def digest_snapshot(payload: dict[str, Any], request: Request) -> dict[str, Any]:
     """Return tasks, recent completions, and activity entries for digests."""
@@ -74,7 +82,9 @@ def digest_snapshot(payload: dict[str, Any], request: Request) -> dict[str, Any]
     activity_since = None
     if activity_since_value is not None:
         try:
-            activity_since = datetime.fromisoformat(str(activity_since_value))
+            activity_since = _normalize_datetime_utc(
+                datetime.fromisoformat(str(activity_since_value))
+            )
         except ValueError:
             raise McpError(
                 "INVALID_DATE",
@@ -89,6 +99,7 @@ def digest_snapshot(payload: dict[str, Any], request: Request) -> dict[str, Any]
         priority,
         tag,
         project,
+        library_root,
     )
 
     completed: list[dict[str, Any]] = []
@@ -100,6 +111,7 @@ def digest_snapshot(payload: dict[str, Any], request: Request) -> dict[str, Any]
             priority,
             tag,
             project,
+            library_root,
         )[:completed_limit]
 
     activity_entries = _read_activity_entries(

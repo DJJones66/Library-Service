@@ -59,18 +59,31 @@ def _read_bool(raw_value: str | None, *, default: bool, key: str) -> bool:
     raise ConfigError(f"{key} must be a boolean value.")
 
 
+def _resolve_configured_path(raw_path: str, *, relative_root: Path | None = None) -> Path:
+    candidate = Path(raw_path).expanduser()
+    if not candidate.is_absolute() and relative_root is not None:
+        candidate = relative_root / candidate
+    return candidate.resolve()
+
+
 def load_config() -> AppConfig:
     """Load required configuration from the environment."""
     dotenv_path = Path.cwd() / ".env"
 
     env_key = "BRAINDRIVE_LIBRARY_PATH"
     raw_path = os.environ.get(env_key, "").strip()
-    if not raw_path:
-        raw_path = _read_dotenv_value(dotenv_path, env_key) or ""
-        raw_path = raw_path.strip()
-    if not raw_path:
-        raise ConfigError(
-            "BRAINDRIVE_LIBRARY_PATH is required; set it to the library root path."
+    if raw_path:
+        library_path = _resolve_configured_path(raw_path)
+    else:
+        dotenv_value = _read_dotenv_value(dotenv_path, env_key) or ""
+        dotenv_value = dotenv_value.strip()
+        if not dotenv_value:
+            raise ConfigError(
+                "BRAINDRIVE_LIBRARY_PATH is required; set it to the library root path."
+            )
+        library_path = _resolve_configured_path(
+            dotenv_value,
+            relative_root=dotenv_path.parent,
         )
 
     require_user_key = "BRAINDRIVE_LIBRARY_REQUIRE_USER_HEADER"
@@ -90,7 +103,7 @@ def load_config() -> AppConfig:
         service_token = None
 
     return AppConfig(
-        library_path=Path(raw_path),
+        library_path=library_path,
         require_user_header=require_user_header,
         service_token=service_token,
     )

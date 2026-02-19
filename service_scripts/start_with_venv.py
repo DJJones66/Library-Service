@@ -35,6 +35,10 @@ def main() -> None:
 
     env = os.environ.copy()
     env.setdefault("BRAINDRIVE_LIBRARY_PATH", str(root / "library"))
+    env.setdefault(
+        "BRAINDRIVE_LIBRARY_BASE_TEMPLATE_PATH",
+        str(root / "library_templates" / "Base_Library"),
+    )
 
     data_dir = root / "data"
     data_dir.mkdir(parents=True, exist_ok=True)

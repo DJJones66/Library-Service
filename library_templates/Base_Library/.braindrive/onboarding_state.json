@@ -1,0 +1,90 @@
+{
+  "version": 2,
+  "starter_topics": {
+    "finances": "not_started",
+    "fitness": "not_started",
+    "relationships": "not_started",
+    "career": "not_started",
+    "whyfinder": "not_started"
+  },
+  "completed_at": {},
+  "created_at_utc": "2026-02-17T00:00:00+00:00",
+  "updated_at_utc": "2026-02-17T00:00:00+00:00",
+  "active_topic": null,
+  "topic_queue": [
+    "finances",
+    "fitness",
+    "relationships",
+    "career",
+    "whyfinder"
+  ],
+  "recommended_next_topic": "finances",
+  "topic_progress": {
+    "finances": {
+      "status": "not_started",
+      "phase": "not_started",
+      "started_at_utc": null,
+      "last_interview_at_utc": null,
+      "completed_at_utc": null,
+      "next_followup_due_at_utc": null,
+      "question_total": 0,
+      "question_index": 0,
+      "followup_cycles": 0,
+      "future_interview_topics": [],
+      "last_updated_at_utc": "2026-02-17T00:00:00+00:00"
+    },
+    "fitness": {
+      "status": "not_started",
+      "phase": "not_started",
+      "started_at_utc": null,
+      "last_interview_at_utc": null,
+      "completed_at_utc": null,
+      "next_followup_due_at_utc": null,
+      "question_total": 0,
+      "question_index": 0,
+      "followup_cycles": 0,
+      "future_interview_topics": [],
+      "last_updated_at_utc": "2026-02-17T00:00:00+00:00"
+    },
+    "relationships": {
+      "status": "not_started",
+      "phase": "not_started",
+      "started_at_utc": null,
+      "last_interview_at_utc": null,
+      "completed_at_utc": null,
+      "next_followup_due_at_utc": null,
+      "question_total": 0,
+      "question_index": 0,
+      "followup_cycles": 0,
+      "future_interview_topics": [],
+      "last_updated_at_utc": "2026-02-17T00:00:00+00:00"
+    },
+    "career": {
+      "status": "not_started",
+      "phase": "not_started",
+      "started_at_utc": null,
+      "last_interview_at_utc": null,
+      "completed_at_utc": null,
+      "next_followup_due_at_utc": null,
+      "question_total": 0,
+      "question_index": 0,
+      "followup_cycles": 0,
+      "future_interview_topics": [],
+      "last_updated_at_utc": "2026-02-17T00:00:00+00:00"
+    },
+    "whyfinder": {
+      "status": "not_started",
+      "phase": "not_started",
+      "started_at_utc": null,
+      "last_interview_at_utc": null,
+      "completed_at_utc": null,
+      "next_followup_due_at_utc": null,
+      "question_total": 0,
+      "question_index": 0,
+      "followup_cycles": 0,
+      "future_interview_topics": [],
+      "last_updated_at_utc": "2026-02-17T00:00:00+00:00"
+    }
+  },
+  "topic_history": []
+}
