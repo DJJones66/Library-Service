@@ -1,6 +1,8 @@
 import os
 import subprocess
 import sys
+import time
+from datetime import UTC, datetime
 from pathlib import Path
 
 if sys.platform.startswith("win"):
@@ -63,16 +65,37 @@ def _pid_is_running(pid: int) -> bool:
     return True
 
 
+def _runtime_log_line(log_file: Path, message: str) -> None:
+    """Append a timestamped diagnostic line to service_runtime.log."""
+    log_file.parent.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now(UTC).isoformat()
+    line = f"[{timestamp}] {message}\n"
+    with log_file.open("a", encoding="utf-8") as handle:
+        handle.write(line)
+        handle.flush()
+        try:
+            os.fsync(handle.fileno())
+        except OSError:
+            # Best-effort durability; some filesystems may not support fsync.
+            pass
+
+
 def main() -> None:
     root = Path(__file__).resolve().parents[1]
+    log_file = root / "service_runtime.log"
+    log_file.parent.mkdir(parents=True, exist_ok=True)
+
     venv_python = _venv_python(root)
     if not venv_python.exists():
-        raise SystemExit(f"venv python not found: {venv_python}. Run install_with_venv.py first.")
+        message = f"venv python not found: {venv_python}. Run install_with_venv.py first."
+        _runtime_log_line(log_file, message)
+        raise SystemExit(message)
 
     process_host = os.getenv("PROCESS_HOST", DEFAULT_PROCESS_HOST).strip() or DEFAULT_PROCESS_HOST
     process_port = os.getenv("PROCESS_PORT", DEFAULT_PROCESS_PORT).strip() or DEFAULT_PROCESS_PORT
 
     env = os.environ.copy()
+    env.setdefault("PYTHONUNBUFFERED", "1")
     env.setdefault("BRAINDRIVE_LIBRARY_PATH", str(root / "library"))
     env.setdefault(
         "BRAINDRIVE_LIBRARY_BASE_TEMPLATE_PATH",
@@ -82,19 +105,19 @@ def main() -> None:
     data_dir = root / "data"
     data_dir.mkdir(parents=True, exist_ok=True)
     pid_file = data_dir / "service.pid"
-    log_file = root / "service_runtime.log"
-    log_file.parent.mkdir(parents=True, exist_ok=True)
 
     if pid_file.exists():
         try:
             existing_pid = int(pid_file.read_text(encoding="utf-8").strip())
             if _pid_is_running(existing_pid):
+                _runtime_log_line(log_file, f"service already running pid={existing_pid}")
                 print(f"service already running pid={existing_pid}")
                 return
         except (ValueError, OSError):
             pass
         try:
             pid_file.unlink()
+            _runtime_log_line(log_file, "removed stale pid file before startup")
         except OSError:
             pass
 
@@ -109,16 +132,43 @@ def main() -> None:
         process_port,
     ]
 
-    with log_file.open("ab") as log_handle:
-        proc = subprocess.Popen(
-            cmd,
-            cwd=str(root),
-            stdout=log_handle,
-            stderr=log_handle,
-            env=env,
+    _runtime_log_line(
+        log_file,
+        (
+            "starting library service "
+            f"host={process_host} port={process_port} cwd={root} python={venv_python}"
+        ),
+    )
+    _runtime_log_line(log_file, f"launch command: {' '.join(cmd)}")
+
+    try:
+        with log_file.open("ab") as log_handle:
+            proc = subprocess.Popen(
+                cmd,
+                cwd=str(root),
+                stdin=subprocess.DEVNULL,
+                stdout=log_handle,
+                stderr=log_handle,
+                env=env,
+            )
+    except Exception as exc:
+        _runtime_log_line(log_file, f"failed to spawn process: {exc!r}")
+        raise
+
+    # Catch fast failures to avoid "started" false positives.
+    time.sleep(0.4)
+    exit_code = proc.poll()
+    if exit_code is not None:
+        _runtime_log_line(
+            log_file,
+            f"service exited immediately after launch (exit_code={exit_code})",
+        )
+        raise SystemExit(
+            f"service failed to start (exit_code={exit_code}); see {log_file}"
         )
 
     pid_file.write_text(str(proc.pid), encoding="utf-8")
+    _runtime_log_line(log_file, f"service started pid={proc.pid}")
     print(f"started pid={proc.pid} host={process_host} port={process_port}")
 
 
